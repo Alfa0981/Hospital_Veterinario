@@ -41,14 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Acceso.cs" />
+    <Compile Include="MpEvento.cs" />
+    <Compile Include="MpUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="queries\EventoQuery.cs" />
+    <Compile Include="queries\UsuarioQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">
       <Project>{2d033abd-0f69-49a0-86ae-2d1151c4d252}</Project>
       <Name>BE</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="queries\scripts-generadores\db_users_perfiles.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

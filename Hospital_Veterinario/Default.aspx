@@ -8,15 +8,29 @@
             <div style="margin-bottom: 15px;">
                 <label for="txtUsername">Usuario</label><br />
                 <asp:TextBox ID="txtUsername" runat="server" CssClass="form-control" Width="100%" />
+                <asp:RequiredFieldValidator 
+                    ID="rfvUsername" 
+                    runat="server" 
+                    ControlToValidate="txtUsername"
+                    ErrorMessage="El usuario es obligatorio"
+                    ForeColor="Red"
+                    Display="Dynamic" />
             </div>
             
             <div style="margin-bottom: 15px;">
                 <label for="txtPassword">Contraseña</label><br />
                 <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control" Width="100%" />
+                <asp:RequiredFieldValidator 
+                    ID="rfvPassword" 
+                    runat="server" 
+                    ControlToValidate="txtPassword"
+                    ErrorMessage="La contraseña es obligatoria"
+                    ForeColor="Red"
+                    Display="Dynamic" />
             </div>
             
             <div style="text-align: center;">
-                <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary" />
+                <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary" OnClick="btnLogin_Click" />
             </div>
         </div>
     </main>
