@@ -1,47 +1,38 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Hospital_Veterinario._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
-    <main>
-        <section class="row" aria-labelledby="aspnetTitle">
-
-            <h1 id="aspnetTitle">LAUTARO</h1>
-
-            <p class="lead">Luján is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-
-            <p><a href="http://www.asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-        </section>
-
-        <div class="row">
-            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-                <h2 id="gettingStartedTitle">Getting started</h2>
-                <p>
-                    ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-                A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="librariesTitle">
-                <h2 id="librariesTitle">Get more libraries</h2>
-                <p>
-                    NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="hostingTitle">
-                <h2 id="hostingTitle">Web Hosting</h2>
-                <p>
-                    You can easily find a web hosting company that offers the right mix of features and price for your applications.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-                </p>
-            </section>
+    <main style="display: flex; justify-content: center; align-items: center; height: 80vh;">
+        <div style="border: 1px solid #ccc; padding: 30px; border-radius: 10px; width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+            <h2 style="text-align: center; color: #2c3e50;">Login - Hospital Veterinario</h2>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="txtUsername">Usuario</label><br />
+                <asp:TextBox ID="txtUsername" runat="server" CssClass="form-control" Width="100%" />
+                <asp:RequiredFieldValidator 
+                    ID="rfvUsername" 
+                    runat="server" 
+                    ControlToValidate="txtUsername"
+                    ErrorMessage="El usuario es obligatorio"
+                    ForeColor="Red"
+                    Display="Dynamic" />
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="txtPassword">Contraseña</label><br />
+                <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control" Width="100%" />
+                <asp:RequiredFieldValidator 
+                    ID="rfvPassword" 
+                    runat="server" 
+                    ControlToValidate="txtPassword"
+                    ErrorMessage="La contraseña es obligatoria"
+                    ForeColor="Red"
+                    Display="Dynamic" />
+            </div>
+            
+            <div style="text-align: center;">
+                <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary" OnClick="btnLogin_Click" />
+            </div>
         </div>
     </main>
-
 </asp:Content>
+
