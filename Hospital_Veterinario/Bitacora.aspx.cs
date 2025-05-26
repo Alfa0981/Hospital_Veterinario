@@ -71,6 +71,7 @@ namespace Hospital_Veterinario
             {
                 NombreApellido = ev.Usuario != null ? $"{ev.Usuario.Nombre} {ev.Usuario.Apellido}" : "",
                 Modulo = ev.Modulo,
+                Descripcion = ev.Descripcion,
                 Fecha = ev.Fecha.ToString("dd/MM/yyyy"),
                 Hora = ev.Hora.ToString(@"hh\:mm\:ss"),
                 Criticidad = ev.Criticidad,

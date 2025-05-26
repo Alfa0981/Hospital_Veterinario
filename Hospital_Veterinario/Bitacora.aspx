@@ -102,6 +102,7 @@
                 <Columns>
                     <asp:BoundField DataField="NombreApellido" HeaderText="Nombre y Apellido" />
                     <asp:BoundField DataField="Modulo" HeaderText="Módulo" />
+                    <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
                     <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
                     <asp:BoundField DataField="Hora" HeaderText="Hora" />
                     <asp:BoundField DataField="Criticidad" HeaderText="Criticidad" />
