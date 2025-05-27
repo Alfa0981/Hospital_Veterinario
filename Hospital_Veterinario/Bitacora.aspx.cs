@@ -55,6 +55,7 @@ namespace Hospital_Veterinario
                 Modulo = ev.Modulo,
                 Fecha = ev.Fecha.ToString("dd/MM/yyyy"),
                 Hora = ev.Hora.ToString(@"hh\:mm\:ss"),
+                Descripcion = ev.Descripcion,
                 Criticidad = ev.Criticidad,
                 Email = ev.Usuario != null ? ev.Usuario.Email : ""
             }).ToList();
