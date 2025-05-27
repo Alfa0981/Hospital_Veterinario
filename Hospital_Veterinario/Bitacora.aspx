@@ -95,8 +95,12 @@
     </script>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server">        
         <div class="bitacora-container">
+             <div style="margin-bottom: 20px;">
+                <asp:Button ID="btnVolver" runat="server" Text="← Volver" CssClass="bitacora-btn-filtrar" OnClientClick="history.back(); return false;" />
+            </div>
+            
             <div class="bitacora-title">Bitácora de Eventos</div>
             <asp:GridView ID="gvBitacora" runat="server" CssClass="bitacora-table" AutoGenerateColumns="False">
                 <Columns>

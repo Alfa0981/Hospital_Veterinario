@@ -11,12 +11,46 @@
             padding: 0;
             font-family: 'Segoe UI', Arial, sans-serif;
         }
+
+        .navbar {
+            background-color: #2176ae;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar-title {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .navbar-button:hover {
+            opacity: 0.8;
+        }
+
         .center-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 90vh;
+            height: 85vh;
         }
+
         .welcome-box {
             background: #fff;
             border-radius: 12px;
@@ -25,34 +59,48 @@
             text-align: center;
             min-width: 320px;
         }
+
         .welcome-label {
             font-size: 1.5em;
             color: #2176ae;
             margin-bottom: 30px;
             font-weight: 600;
         }
-        .bitacora-btn {
-            background: #2176ae;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 12px 32px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .bitacora-btn:hover {
-            background: #185a8c;
-        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
+        <!-- Menú superior -->
+        <div class="navbar">
+    <div class="navbar-title">Hospital Veterinario</div>
+    <div class="navbar-menu">
+        <asp:LinkButton ID="btnMascotas" runat="server" CssClass="navbar-button"
+            OnClientClick="alert('Sección Mascotas en proceso'); return false;">Mascotas</asp:LinkButton>
+
+        <asp:LinkButton ID="btnProfesionales" runat="server" CssClass="navbar-button"
+            OnClientClick="alert('Sección Profesionales en proceso'); return false;">Profesionales</asp:LinkButton>
+
+        <asp:LinkButton ID="btnProductos" runat="server" CssClass="navbar-button"
+            OnClientClick="alert('Sección Productos en proceso'); return false;">Productos</asp:LinkButton>
+
+        <asp:LinkButton ID="btnComercio" runat="server" CssClass="navbar-button"
+            OnClientClick="alert('Sección Comercio en proceso'); return false;">Comercio</asp:LinkButton>
+
+        <asp:LinkButton ID="btnUsuarios" runat="server" CssClass="navbar-button"
+            OnClientClick="alert('Sección Usuarios en proceso'); return false;">Usuarios</asp:LinkButton>
+
+        <asp:Button ID="btnBitacora" runat="server" CssClass="navbar-button"
+            Text="Bitácora" OnClick="btnBitacora_Click" />
+
+        <asp:Button ID="btnCerrarSesion" runat="server" CssClass="navbar-button"
+            Text="Cerrar sesión" OnClick="btnCerrarSesion_Click" />
+    </div>
+</div>
+
+        <!-- Contenido central -->
         <div class="center-container">
             <div class="welcome-box">
                 <asp:Label ID="lblBienvenida" runat="server" CssClass="welcome-label" Text="¡Bienvenido!"></asp:Label>
-                <br />
-                <asp:Button ID="btnBitacora" runat="server" CssClass="bitacora-btn" Text="Bitacora" OnClick="btnBitacora_Click" />
             </div>
         </div>
     </form>
