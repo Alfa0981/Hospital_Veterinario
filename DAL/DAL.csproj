@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acceso.cs" />
+    <Compile Include="MpDV.cs" />
     <Compile Include="MpEvento.cs" />
+    <Compile Include="MpRestore.cs" />
     <Compile Include="MpUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="queries\EventoQuery.cs" />

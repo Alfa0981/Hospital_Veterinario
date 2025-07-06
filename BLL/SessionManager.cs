@@ -11,6 +11,7 @@ namespace BLL
     {
         private static SessionManager session;
         private BE.Usuario usuario;
+        public static List<BE.VerificacionResultadoClass> DVResultados { get; private set; }
 
         public BE.Usuario Usuario
         {
@@ -45,6 +46,11 @@ namespace BLL
             {
                 session = null;
             }
+        }
+
+        public static void SetDVResultados(List<BE.VerificacionResultadoClass> resultados)
+        {
+            DVResultados = resultados;
         }
     }
 }
