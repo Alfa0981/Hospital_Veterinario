@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace BLL
             }
         }
 
-        public void login(BE.Usuario usuarioALoguear)
+        /*public void login(BE.Usuario usuarioALoguear)
         {
 
             usuarioALoguear.Password = HashSHA256(usuarioALoguear.Password);
@@ -44,6 +45,36 @@ namespace BLL
                 gestionEventos.persistirEvento("Login", BE.Modulos.Users.ToString(), 3);
                 usuarioCargado.Intentos = 0;
                 mpUsuario.modificarUsuario(usuarioCargado);
+
+                var verificador = new ServiceDV();
+                var resultado = verificador.VerificarIntegridad();
+                var inconsistencias = resultado
+                    .Where(r => r.RegistrosAlterados.Count > 0)
+                    .Select(r => $"Tabla: {r.Tabla}, Registros alterados: {string.Join(", ", r.RegistrosAlterados)}")
+                    .ToList();
+
+                var detallesColumnas = new List<string>();
+
+                foreach (var r in resultado.Where(r => r.RegistrosAlterados.Count > 0))
+                {
+                    if (r.Tabla != "Usuarios" && r.Tabla != "Mascotas")
+                        continue; // ignorar cualquier tabla inesperada
+                    foreach (var ca in r.ColumnasAlteradas)
+                    {
+                        detallesColumnas.Add($"Tabla: {r.Tabla}, Id: {ca.IdRegistro}, Columna: {ca.Columna}");
+                    }
+                }
+
+                if (inconsistencias.Any())
+                {
+                    string mensaje = "⚠️ Se detectaron alteraciones en los datos:\n" +
+                                     string.Join("\n", inconsistencias) + "\n\n" +
+                                     "🧬 Detalles por columna:\n" +
+                                     string.Join("\n", detallesColumnas);
+
+                    SessionManager.Logout(); // salir por seguridad
+                    throw new Exception(mensaje);
+                }
             }
             else
             {
@@ -59,6 +90,83 @@ namespace BLL
                     throw new Exception("Credenciales invalidas");
                 }
             }
+        }*/
+
+        /*public void login(BE.Usuario usuarioALoguear)
+        {
+            var verificador = new ServiceDV();
+            var resultado = verificador.VerificarIntegridad();
+
+            bool hayErrores = resultado.Any(r => r.RegistrosAlterados.Count > 0);
+            // Paso 2: Login normal si todo está bien
+            usuarioALoguear.Password = HashSHA256(usuarioALoguear.Password);
+            BE.Usuario usuarioCargado = mpUsuario.BuscarPorEmail(usuarioALoguear.Email);
+
+            if (validarUsuario(usuarioALoguear, usuarioCargado))
+            {
+                SessionManager.Login(usuarioCargado);
+                gestionEventos.persistirEvento("Login", BE.Modulos.Users.ToString(), 3);
+                usuarioCargado.Intentos = 0;
+                mpUsuario.modificarUsuario(usuarioCargado);
+
+            }else
+            {
+                usuarioCargado.Intentos++;
+                if (usuarioCargado.Intentos > 3)
+                {
+                    bloquearUsuario(usuarioCargado);
+                    throw new Exception("El usuario ha sido bloqueado por 3 intentos fallidos");
+                }
+                else
+                {
+                    mpUsuario.modificarUsuario(usuarioCargado);
+                    throw new Exception("Credenciales inválidas");
+                }
+            }
+           
+            if (hayErrores)
+            {
+                // Guardar detalles si querés mostrarlos en el FormRepararDV
+                SessionManager.SetDVResultados(resultado);
+
+                // Mostrar el formulario de reparación
+                
+
+                return; // interrumpir login
+            }
+            
+        }*/
+
+        public bool login(BE.Usuario usuarioALoguear, out List<BE.VerificacionResultadoClass> resultadoDV)
+        {
+            var verificador = new ServiceDV();
+            resultadoDV = verificador.VerificarIntegridad();
+
+            usuarioALoguear.Password = HashSHA256(usuarioALoguear.Password);
+            BE.Usuario usuarioCargado = mpUsuario.BuscarPorEmail(usuarioALoguear.Email);
+
+            if (!validarUsuario(usuarioALoguear, usuarioCargado))
+            {
+                usuarioCargado.Intentos++;
+                if (usuarioCargado.Intentos > 3)
+                {
+                    bloquearUsuario(usuarioCargado);
+                    throw new Exception("El usuario ha sido bloqueado por 3 intentos fallidos");
+                }
+                else
+                {
+                    mpUsuario.modificarUsuario(usuarioCargado);
+                    verificador.RecalcularDVH();
+                    throw new Exception("Credenciales inválidas");
+                }
+            }
+
+            SessionManager.Login(usuarioCargado);
+            gestionEventos.persistirEvento("Login", BE.Modulos.Users.ToString(), 3);
+            usuarioCargado.Intentos = 0;
+            mpUsuario.modificarUsuario(usuarioCargado);
+
+            return resultadoDV.Any(r => r.RegistrosAlterados.Count > 0); // true si hay errores
         }
 
         private bool validarUsuario(BE.Usuario usuarioALoguear, BE.Usuario usuarioCargado)

@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GestionEventos.cs" />
+    <Compile Include="ServiceDV.cs" />
+    <Compile Include="ServiceRestore.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

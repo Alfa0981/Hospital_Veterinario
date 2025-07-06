@@ -31,7 +31,10 @@
             
             <div style="text-align: center;">
                 <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary" OnClick="btnLogin_Click" />
+                <asp:Button ID="btnDV" runat="server" Text="Calcular DV 1ra vez" CssClass="btn btn-primary" OnClick="btnDV_Click" />
             </div>
+            <asp:Label ID="lblError" runat="server" ForeColor="Red" CssClass="error-label" Visible="false" />
+
         </div>
     </main>
 </asp:Content>

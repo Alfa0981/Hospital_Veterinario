@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DV.cs" />
     <Compile Include="Evento.cs" />
     <Compile Include="Familia.cs" />
+    <Compile Include="Mascota.cs" />
     <Compile Include="Modulos.cs" />
     <Compile Include="Patente.cs" />
     <Compile Include="Perfil.cs" />

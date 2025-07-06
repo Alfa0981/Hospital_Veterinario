@@ -12,10 +12,12 @@ namespace Hospital_Veterinario
     public partial class _Default : Page
     {
         BLL.Usuario gestorUsuario;
+        BLL.ServiceDV gestorDV;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             gestorUsuario = new BLL.Usuario();
+
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -27,23 +29,29 @@ namespace Hospital_Veterinario
 
             try
             {
-                gestorUsuario.login(usuario);
+                bool hayErrores = gestorUsuario.login(usuario, out List<BE.VerificacionResultadoClass> erroresDV);
 
-                // Redirigir a la página de inicio después de un inicio de sesión exitoso
-
-                Response.Redirect("Inicio.aspx");
+                if (hayErrores)
+                {
+                    Session["ErroresDV"] = erroresDV;
+                    Response.Redirect("DVForm.aspx");
+                }
+                else
+                {
+                    Response.Redirect("Inicio.aspx");
+                }
             }
             catch (Exception ex)
             {
-                string mensaje = ex.Message.Replace("'", "\\'"); // Escapa comillas simples
-                ScriptManager.RegisterStartupScript(
-                    this,
-                    this.GetType(),
-                    "alertaLogin",
-                    $"alert('{mensaje}');",
-                    true
-                );
+                lblError.Text = ex.Message;
             }
+        }
+
+        protected void btnDV_Click(object sender, EventArgs e)
+        {
+            var gestorDV = new ServiceDV();
+            gestorDV.RecalcularDVH();
+            //gestorDV.RecalcularDVV();
         }
     }
 }
