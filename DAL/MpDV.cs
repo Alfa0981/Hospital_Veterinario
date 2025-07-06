@@ -30,11 +30,7 @@ namespace DAL
             acceso.escribir(sql, null);
         }
 
-        public void EliminarDVVsExistentes(string tabla)
-        {
-            string sql = $"DELETE FROM DVV_{tabla}";
-            acceso.escribir(sql, null);
-        }
+      
         public List<BE.DV> ObtenerDVHs(string tabla)
         {
             var lista = new List<BE.DV>();
@@ -75,35 +71,7 @@ namespace DAL
             acceso.escribir(query, parametros);
         }
 
-        public void GuardarDVV(string tabla, string columna, long dv)
-        {
-            string query = $"UPDATE DVV_{tabla} SET DV = @dv WHERE Columna = @col";
-            SqlParameter[] parametros = {
-        new SqlParameter("@dv", dv),
-        new SqlParameter("@col", columna)
-    };
-            acceso.escribir(query, parametros);
-        }
-
-        /*public void InsertarDVV(string tabla, string columna, long dv)
-        {
-            string query = $"INSERT INTO DVV_{tabla}(Columna, DV) VALUES(@col, @dv)";
-            SqlParameter[] parametros = {
-        new SqlParameter("@dv", dv),
-        new SqlParameter("@col", columna)
-    };
-            acceso.escribir(query, parametros);
-        }*/
-
-        public Dictionary<string, long> ObtenerDVVs(string tabla)
-        {
-            string query = $"SELECT Columna, DV FROM DVV_{tabla}";
-            DataTable dt = acceso.leer(query, null);
-
-            return dt.AsEnumerable().ToDictionary(
-                row => row.Field<string>("Columna"),
-                row => row.Field<long>("DV"));
-        }
+        
 
         //nuevos metodos de prueba para DVH por campo
         public void InsertarDVHPorCampo(string tabla, int idRegistro, string columna, long dvh)
