@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,7 +13,14 @@ namespace Hospital_Veterinario
 		BLL.GestionEventos gestionEventos; 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			gestionEventos = new BLL.GestionEventos();
+            //Se evalua el perfil del usuario, en caso de no ser WebMaster, no accede a la seccion
+            if (SessionManager.GetInstance?.Usuario.Perfil.Nombre != "WebMaster")
+            {
+                Response.Redirect("AccesoDenegado.aspx");
+            }
+        
+            //En caso de ser WebMaster, se carga la bitacora
+            gestionEventos = new BLL.GestionEventos();
             if (!IsPostBack)
             {
                 CargarBitacora();
