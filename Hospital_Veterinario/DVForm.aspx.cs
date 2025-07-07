@@ -15,10 +15,20 @@ namespace Hospital_Veterinario
     public partial class DVForm : System.Web.UI.Page
     {
         ServiceDV gestorDV;
+
+        BLL.Usuario gestorUsuario;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                if (SessionManager.GetInstance?.Usuario.Perfil.Nombre != "WebMaster")
+                {
+                    // Ocultar botones si no es WebMaster
+                    btnRecalcularDV.Visible = false;
+                    btnRestaurarBackup.Visible = false;
+                    dgvErrores.Visible = false;
+                }
+
                 var errores = Session["ErroresDV"] as List<BE.VerificacionResultadoClass>;
                 if (errores != null)
                 {
@@ -69,7 +79,10 @@ namespace Hospital_Veterinario
 
         protected void btnSalir_Click(object sender, EventArgs e)
         {
-
+            //Al salir, se realiza el logout y se redirecciona al login
+            gestorUsuario = new BLL.Usuario();
+            gestorUsuario.logout();
+            Response.Redirect("Default.aspx");
         }
     }
 }

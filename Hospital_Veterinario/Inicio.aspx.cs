@@ -15,8 +15,37 @@ namespace Hospital_Veterinario
 
         protected void Page_Load(object sender, EventArgs e)
 		{
+            //Se obtiene el usuario a traves de la Session y se le da la bienvenida
+            BE.Usuario usuario = SessionManager.GetInstance?.Usuario;
             gestorUsuario = new BLL.Usuario();
-            lblBienvenida.Text = "¡Bienvenido, " + SessionManager.GetInstance.Usuario.Nombre + "!";
+            lblBienvenida.Text = "¡Bienvenido, " + usuario.Nombre + "!";
+
+            // Ocultar botones según el perfil
+            string perfil = usuario.Perfil?.Nombre;
+
+            switch (perfil)
+            {
+                case "WebMaster":
+                    // WebMaster ve todo
+                    break;
+
+                case "Admin":
+                    btnUsuarios.Visible = false;
+                    btnBitacora.Visible = false;
+                    break;
+
+                case "Cliente":
+                    btnUsuarios.Visible = false;
+                    btnBitacora.Visible = false;
+                    btnProductos.Visible = false;
+                    btnComercio.Visible = false;
+                    break;
+
+                default:
+                    // Si no tiene perfil asignado, redirigir o bloquear todo
+                    Response.Redirect("AccesoDenegado.aspx");
+                    break;
+            }
         }
 
         protected void btnMascotas_Click(object sender, EventArgs e)
