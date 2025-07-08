@@ -13,6 +13,10 @@ namespace DAL
     {
         Acceso acceso = new Acceso();
 
+        /// <summary>
+        /// Persiste un evento en la base de datos utilizando parámetros SQL.
+        /// Registra criticidad, módulo, usuario asociado y descripción.
+        /// </summary>
         public void persitirEvento(BE.Evento evento)
         {
             SqlParameter[] sqlParameters = new SqlParameter[4];
@@ -25,6 +29,10 @@ namespace DAL
             acceso.escribir(queries.EventoQuery.Insertar, sqlParameters);
         }
 
+        /// <summary>
+        /// Obtiene todos los eventos registrados en la base de datos,
+        /// y los convierte en una lista de objetos de tipo Evento.
+        /// </summary>
         public List<BE.Evento> obtenerTodos()
         {
             DataTable table = acceso.leer(queries.EventoQuery.SeleccionarTodos, null);
@@ -37,9 +45,12 @@ namespace DAL
             return eventos;
         }
 
+        /// <summary>
+        /// Convierte una fila del DataTable en un objeto Evento,
+        /// incluyendo datos del usuario que generó el evento.
+        /// </summary>
         private Evento ConvertirDataRowAEvento(DataRow row)
         {
-
             Evento evento = new Evento()
             {
                 Id = Convert.ToInt32(row["id"]),

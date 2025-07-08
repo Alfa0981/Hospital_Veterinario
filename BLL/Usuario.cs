@@ -14,7 +14,10 @@ namespace BLL
         MpUsuario mpUsuario = new MpUsuario();
         GestionEventos gestionEventos = new GestionEventos();
 
-        // Hashing de la contraseña
+        /// <summary>
+        /// Aplica hashing SHA-256 a una cadena de texto.
+        /// Utilizado para proteger contraseñas antes de compararlas o almacenarlas.
+        /// </summary>
         public static string HashSHA256(string input)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -31,112 +34,15 @@ namespace BLL
             }
         }
 
-        /*public void login(BE.Usuario usuarioALoguear)
-        {
-
-            usuarioALoguear.Password = HashSHA256(usuarioALoguear.Password);
-            BE.Usuario usuarioCargado = mpUsuario.BuscarPorEmail(usuarioALoguear.Email);
-
-           
-            if (validarUsuario(usuarioALoguear, usuarioCargado))
-            {
-                //Login exitoso
-                SessionManager.Login(usuarioCargado);
-                gestionEventos.persistirEvento("Login", BE.Modulos.Users.ToString(), 3);
-                usuarioCargado.Intentos = 0;
-                mpUsuario.modificarUsuario(usuarioCargado);
-
-                var verificador = new ServiceDV();
-                var resultado = verificador.VerificarIntegridad();
-                var inconsistencias = resultado
-                    .Where(r => r.RegistrosAlterados.Count > 0)
-                    .Select(r => $"Tabla: {r.Tabla}, Registros alterados: {string.Join(", ", r.RegistrosAlterados)}")
-                    .ToList();
-
-                var detallesColumnas = new List<string>();
-
-                foreach (var r in resultado.Where(r => r.RegistrosAlterados.Count > 0))
-                {
-                    if (r.Tabla != "Usuarios" && r.Tabla != "Mascotas")
-                        continue; // ignorar cualquier tabla inesperada
-                    foreach (var ca in r.ColumnasAlteradas)
-                    {
-                        detallesColumnas.Add($"Tabla: {r.Tabla}, Id: {ca.IdRegistro}, Columna: {ca.Columna}");
-                    }
-                }
-
-                if (inconsistencias.Any())
-                {
-                    string mensaje = "⚠️ Se detectaron alteraciones en los datos:\n" +
-                                     string.Join("\n", inconsistencias) + "\n\n" +
-                                     "🧬 Detalles por columna:\n" +
-                                     string.Join("\n", detallesColumnas);
-
-                    SessionManager.Logout(); // salir por seguridad
-                    throw new Exception(mensaje);
-                }
-            }
-            else
-            {
-                usuarioCargado.Intentos++;
-                if (usuarioCargado.Intentos > 3)
-                {
-                    bloquearUsuario(usuarioCargado);
-                    throw new Exception("El usuario ha sido bloqueado por 3 intentos fallidos");
-                }
-                else
-                {
-                    mpUsuario.modificarUsuario(usuarioCargado);
-                    throw new Exception("Credenciales invalidas");
-                }
-            }
-        }*/
-
-        /*public void login(BE.Usuario usuarioALoguear)
-        {
-            var verificador = new ServiceDV();
-            var resultado = verificador.VerificarIntegridad();
-
-            bool hayErrores = resultado.Any(r => r.RegistrosAlterados.Count > 0);
-            // Paso 2: Login normal si todo está bien
-            usuarioALoguear.Password = HashSHA256(usuarioALoguear.Password);
-            BE.Usuario usuarioCargado = mpUsuario.BuscarPorEmail(usuarioALoguear.Email);
-
-            if (validarUsuario(usuarioALoguear, usuarioCargado))
-            {
-                SessionManager.Login(usuarioCargado);
-                gestionEventos.persistirEvento("Login", BE.Modulos.Users.ToString(), 3);
-                usuarioCargado.Intentos = 0;
-                mpUsuario.modificarUsuario(usuarioCargado);
-
-            }else
-            {
-                usuarioCargado.Intentos++;
-                if (usuarioCargado.Intentos > 3)
-                {
-                    bloquearUsuario(usuarioCargado);
-                    throw new Exception("El usuario ha sido bloqueado por 3 intentos fallidos");
-                }
-                else
-                {
-                    mpUsuario.modificarUsuario(usuarioCargado);
-                    throw new Exception("Credenciales inválidas");
-                }
-            }
-           
-            if (hayErrores)
-            {
-                // Guardar detalles si querés mostrarlos en el FormRepararDV
-                SessionManager.SetDVResultados(resultado);
-
-                // Mostrar el formulario de reparación
-                
-
-                return; // interrumpir login
-            }
-            
-        }*/
-
+        /// <summary>
+        /// Realiza el proceso de login de un usuario:
+        /// - Verifica la integridad del sistema con DVH/DVV.
+        /// - Hashea la contraseña ingresada.
+        /// - Busca el usuario por email y valida las credenciales.
+        /// - Maneja intentos fallidos y bloqueo por seguridad.
+        /// - Registra evento de login y reinicia contador de intentos si es exitoso.
+        /// Devuelve true si se detectaron alteraciones de integridad en las tablas.
+        /// </summary>
         public bool login(BE.Usuario usuarioALoguear, out List<BE.VerificacionResultadoClass> resultadoDV)
         {
             var verificador = new ServiceDV();
@@ -169,6 +75,10 @@ namespace BLL
             return resultadoDV.Any(r => r.RegistrosAlterados.Count > 0); // true si hay errores
         }
 
+        /// <summary>
+        /// Valida si las credenciales ingresadas coinciden con las del usuario cargado desde la base.
+        /// También verifica si el usuario está bloqueado.
+        /// </summary>
         private bool validarUsuario(BE.Usuario usuarioALoguear, BE.Usuario usuarioCargado)
         {
             if (usuarioCargado == null)
@@ -181,12 +91,20 @@ namespace BLL
                 return false;
         }
 
+        /// <summary>
+        /// Bloquea al usuario marcándolo como bloqueado y actualizando su estado en la base de datos.
+        /// </summary>
         private void bloquearUsuario(BE.Usuario usuarioCargado)
         {
             usuarioCargado.Bloqueo = true;
             mpUsuario.modificarUsuario(usuarioCargado);
         }
 
+        /// <summary>
+        /// Ejecuta el proceso de logout del sistema:
+        /// - Registra el evento de cierre de sesión.
+        /// - Cierra la sesión actual en el SessionManager.
+        /// </summary>
         public void logout()
         {
             gestionEventos.persistirEvento("Logout", BE.Modulos.Users.ToString(), 3);

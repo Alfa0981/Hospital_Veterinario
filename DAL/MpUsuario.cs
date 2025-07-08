@@ -13,6 +13,11 @@ namespace DAL
     {
         Acceso acceso = new Acceso();
 
+        /// <summary>
+        /// Busca un usuario en la base de datos por su email.
+        /// Si encuentra un resultado, lo convierte en un objeto Usuario.
+        /// Si no hay coincidencias, devuelve null.
+        /// </summary>
         public Usuario BuscarPorEmail(string email)
         {
             SqlParameter[] sqlParameters = new SqlParameter[1];
@@ -28,6 +33,11 @@ namespace DAL
                 return ConvertirDataRowAUsuario(tabla.Rows[0]);
             }
         }
+
+        /// <summary>
+        /// Convierte una fila de un DataTable en un objeto Usuario.
+        /// Extrae los datos del usuario, incluyendo su perfil asociado.
+        /// </summary>
         private Usuario ConvertirDataRowAUsuario(DataRow row)
         {
             Usuario usuario = new Usuario
@@ -51,6 +61,10 @@ namespace DAL
             return usuario;
         }
 
+        /// <summary>
+        /// Modifica los datos de un usuario existente en la base de datos.
+        /// Actualiza información personal, estado de bloqueo, perfil e intentos fallidos.
+        /// </summary>
         public void modificarUsuario(Usuario usuario)
         {
             SqlParameter[] sqlParameters = new SqlParameter[9];
