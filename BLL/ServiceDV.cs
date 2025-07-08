@@ -10,8 +10,12 @@ namespace BLL
     public class ServiceDV
     {
         private readonly DAL.MpDV repo = new DAL.MpDV();
-        private readonly string[] tablasVerificables = {"Usuarios","Mascotas"};
+        private readonly string[] tablasVerificables = { "Usuarios", "Mascotas" };
 
+        /// <summary>
+        /// Calcula el DVH (Dígito Verificador Horizontal) de una cadena de texto,
+        /// aplicando una fórmula de suma ponderada sobre los bytes UTF-8 del texto.
+        /// </summary>
         public long CalcularDVH(string concatenado)
         {
             long sum = 0;
@@ -21,7 +25,11 @@ namespace BLL
             return sum;
         }
 
-
+        /// <summary>
+        /// Verifica la integridad de las tablas configuradas (Usuarios, Mascotas)
+        /// comparando los DVH globales y por campo con los valores almacenados.
+        /// Devuelve una lista de resultados indicando los registros y columnas alteradas.
+        /// </summary>
         public List<BE.VerificacionResultadoClass> VerificarIntegridad()
         {
             var resultados = new List<BE.VerificacionResultadoClass>();
@@ -91,8 +99,10 @@ namespace BLL
             return resultados;
         }
 
-
-
+        /// <summary>
+        /// Recalcula y actualiza los DVH globales y por campo para todas las tablas verificables.
+        /// Elimina primero los valores existentes y luego los genera nuevamente a partir de los datos actuales.
+        /// </summary>
         public void RecalcularDVH()
         {
             string[] tablas = new string[] { "Usuarios", "Mascotas" };
@@ -124,8 +134,5 @@ namespace BLL
                 }
             }
         }
-
-
-
     }
 }

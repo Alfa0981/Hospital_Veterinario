@@ -13,12 +13,18 @@ namespace DAL
         private SqlConnection conn;
         private SqlTransaction transaction;
 
+        /// <summary>
+        /// Propiedad pública para acceder o modificar la conexión SQL activa.
+        /// </summary>
         public SqlConnection Conn
         {
             get { return conn; }
             set { conn = value; }
         }
 
+        /// <summary>
+        /// Establece la conexión con la base de datos utilizando una cadena de conexión fija.
+        /// </summary>
         public void conectar()
         {
             conn = new SqlConnection();
@@ -26,12 +32,19 @@ namespace DAL
             conn.Open();
         }
 
+        /// <summary>
+        /// Cierra y libera la conexión activa con la base de datos.
+        /// </summary>
         public void desconectar()
         {
             conn.Close();
             conn.Dispose();
         }
 
+        /// <summary>
+        /// Inicia una transacción sobre la conexión actual.
+        /// Si la conexión no está abierta, la establece primero.
+        /// </summary>
         public void comenzarTransaccion()
         {
             if (conn == null || conn.State != ConnectionState.Open)
@@ -41,18 +54,29 @@ namespace DAL
             transaction = conn.BeginTransaction();
         }
 
+        /// <summary>
+        /// Confirma (commitea) la transacción actual y cierra la conexión.
+        /// </summary>
         public void confirmarTransaccion()
         {
             transaction?.Commit();
             desconectar();
         }
 
+        /// <summary>
+        /// Revierte (rollback) la transacción actual y cierra la conexión.
+        /// </summary>
         public void revertirTransaccion()
         {
             transaction?.Rollback();
             desconectar();
         }
 
+        /// <summary>
+        /// Ejecuta una consulta de tipo escritura (INSERT, UPDATE o DELETE)
+        /// utilizando los parámetros indicados, y la conexión actual.
+        /// Si hay una transacción activa, la utiliza.
+        /// </summary>
         public void escribir(string query, SqlParameter[] sqlParameters)
         {
             if (conn == null || conn.State != ConnectionState.Open)
@@ -87,6 +111,10 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Ejecuta una consulta de lectura (SELECT) y devuelve los resultados en un DataTable.
+        /// Aplica los parámetros y transacción actual si están definidos.
+        /// </summary>
         public DataTable leer(string query, SqlParameter[] sqlParameters)
         {
             if (conn == null || conn.State != ConnectionState.Open)

@@ -13,7 +13,11 @@ namespace BLL
     {
         MpEvento mpEvento = new MpEvento();
 
-        public void persistirEvento (string tipoEvento, string modulo, int criticidad)
+        /// <summary>
+        /// Registra un evento en la base de datos con la criticidad, el módulo y la descripción proporcionados.
+        /// El evento queda asociado al usuario actualmente logueado en SessionManager.
+        /// </summary>
+        public void persistirEvento(string tipoEvento, string modulo, int criticidad)
         {
             if (SessionManager.GetInstance != null)
             {
@@ -30,6 +34,9 @@ namespace BLL
             }
         }
 
+        /// <summary>
+        /// Obtiene todos los eventos registrados en la base de datos.
+        /// </summary>
         public List<Evento> obtenerEventos()
         {
             return mpEvento.obtenerTodos();
