@@ -81,8 +81,8 @@
             OnClientClick="alert('Sección Profesionales en proceso'); return false;">Profesionales</asp:LinkButton>
 
         <asp:LinkButton ID="btnProductos" runat="server" CssClass="navbar-button"
-            OnClientClick="alert('Sección Productos en proceso'); return false;">Productos</asp:LinkButton>
-
+            Text="Productos" OnClick="btnProductos_Click" />
+        
         <asp:LinkButton ID="btnComercio" runat="server" CssClass="navbar-button"
             OnClientClick="alert('Sección Comercio en proceso'); return false;">Comercio</asp:LinkButton>
 
@@ -91,6 +91,9 @@
 
         <asp:Button ID="btnBitacora" runat="server" CssClass="navbar-button"
             Text="Bitácora" OnClick="btnBitacora_Click" />
+
+        <asp:Button ID="btnUbicacion" runat="server" CssClass="navbar-button"
+            Text="Ubicacion" OnClick="btnUbicacion_Click" />
 
         <asp:Button ID="btnCerrarSesion" runat="server" CssClass="navbar-button"
             Text="Cerrar sesión" OnClick="btnCerrarSesion_Click" />

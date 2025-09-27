@@ -78,6 +78,11 @@ namespace Hospital_Veterinario
             Response.Redirect("Usuarios.aspx");
         }
 
+        protected void btnUbicacion_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Ubicacion.aspx");
+        }
+
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
             gestorUsuario.logout();
