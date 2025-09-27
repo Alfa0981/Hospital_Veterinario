@@ -53,5 +53,26 @@ namespace Hospital_Veterinario
             gestorDV.RecalcularDVH();
             //gestorDV.RecalcularDVV();
         }
+
+        protected void btnForgot_Click(object sender, EventArgs e)
+        {
+            lblError.Visible = false;
+            lblInfo.Visible = false;
+
+            try
+            {
+                string email = txtUsername.Text?.Trim();
+                gestorUsuario = new BLL.Usuario();
+                gestorUsuario.ResetPassword(email);
+
+                lblInfo.Text = "Tu contraseña fue reseteada a 123. Iniciá sesión y cambiala desde tu perfil.";
+                lblInfo.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message;
+                lblError.Visible = true;
+            }
+        }
     }
 }
