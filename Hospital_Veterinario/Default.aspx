@@ -35,6 +35,16 @@
             </div>
             <asp:Label ID="lblError" runat="server" ForeColor="Red" CssClass="error-label" Visible="false" />
 
+            <div style="text-align: center; margin-top:10px;">
+                <asp:Button ID="btnForgot" runat="server" 
+                    Text="Olvidé mi contraseña" 
+                    CssClass="btn btn-link"
+                    CausesValidation="False"
+                    OnClick="btnForgot_Click" />
+            </div>
+
+            <asp:Label ID="lblInfo" runat="server" ForeColor="Green" Visible="false" />
+
         </div>
     </main>
 </asp:Content>

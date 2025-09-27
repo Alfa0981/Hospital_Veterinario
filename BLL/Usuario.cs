@@ -110,5 +110,32 @@ namespace BLL
             gestionEventos.persistirEvento("Logout", BE.Modulos.Users.ToString(), 3);
             SessionManager.Logout();
         }
+
+        public void ResetPassword(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new Exception("Ingresá tu email en el campo Usuario para resetear la contraseña.");
+
+            // 1) Buscar usuario por email
+            var usuario = mpUsuario.BuscarPorEmail(email);
+            if (usuario == null)
+                throw new Exception("No existe un usuario con ese email.");
+
+            // 2) Setear nueva contraseña (hash de 123), desbloquear y limpiar intentos
+            usuario.Password = HashSHA256("123");
+            usuario.Bloqueo = false;
+            usuario.Intentos = 0;
+
+            // 3) Persistir cambios
+            mpUsuario.modificarUsuario(usuario);
+
+            // 4) Recalcular DVH 
+            var verificador = new ServiceDV();
+            verificador.RecalcularDVH();
+
+            // 5)Loggear evento
+            gestionEventos.persistirEvento("Reset de contraseña simple", BE.Modulos.Users.ToString(), 2);
+        }
+
     }
 }
