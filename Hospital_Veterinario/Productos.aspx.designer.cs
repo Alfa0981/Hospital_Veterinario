@@ -11,7 +11,7 @@ namespace Hospital_Veterinario
 {
 
 
-    public partial class Inicio
+    public partial class Productos
     {
 
         /// <summary>
@@ -24,84 +24,84 @@ namespace Hospital_Veterinario
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Control btnMascotas.
+        /// Control btnNavInicio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnMascotas;
+        protected global::System.Web.UI.WebControls.LinkButton btnNavInicio;
 
         /// <summary>
-        /// Control btnProfesionales.
+        /// Control btnNavBitacora.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnProfesionales;
+        protected global::System.Web.UI.WebControls.LinkButton btnNavBitacora;
 
         /// <summary>
-        /// Control btnProductos.
+        /// Control btnVolver.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnProductos;
+        protected global::System.Web.UI.WebControls.Button btnVolver;
 
         /// <summary>
-        /// Control btnComercio.
+        /// Control lblError.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnComercio;
+        protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
-        /// Control btnUsuarios.
+        /// Control gvProductos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnUsuarios;
+        protected global::System.Web.UI.WebControls.GridView gvProductos;
 
         /// <summary>
-        /// Control btnBitacora.
+        /// Control gvCarrito.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBitacora;
+        protected global::System.Web.UI.WebControls.GridView gvCarrito;
 
         /// <summary>
-        /// Control btnUbicacion.
+        /// Control lblTotal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUbicacion;
+        protected global::System.Web.UI.WebControls.Label lblTotal;
 
         /// <summary>
-        /// Control btnCerrarSesion.
+        /// Control btnLimpiarCarrito.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCerrarSesion;
+        protected global::System.Web.UI.WebControls.Button btnLimpiarCarrito;
 
         /// <summary>
-        /// Control lblBienvenida.
+        /// Control btnPagar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBienvenida;
+        protected global::System.Web.UI.WebControls.Button btnPagar;
     }
 }
