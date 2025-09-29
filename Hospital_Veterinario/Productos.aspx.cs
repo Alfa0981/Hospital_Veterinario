@@ -71,7 +71,9 @@ namespace Hospital_Veterinario
                 if (!int.TryParse(txtCant.Text, out int cantidad) || cantidad <= 0)
                     throw new Exception("La cantidad debe ser mayor a 0.");
 
-                gestorProd.ValidarCantidad(productoId, cantidad);
+                // VALIDACIÓN VÍA WS 
+                ValidarUnaCantidadConWS(productoId, cantidad);
+
                 var p = gestorProd.ObtenerPorId(productoId);
 
                 var item = Carrito.FirstOrDefault(c => c.ProductoId == productoId);
@@ -88,11 +90,14 @@ namespace Hospital_Veterinario
                 else
                 {
                     int nueva = item.Cantidad + cantidad;
-                    gestorProd.ValidarCantidad(productoId, nueva);
+
+                    // Revalidamos nueva cantidad acumulada con el WS
+                    ValidarUnaCantidadConWS(productoId, nueva);
+
                     item.Cantidad = nueva;
                 }
 
-                Carrito = Carrito; // persistir en ViewState
+                Carrito = Carrito;
                 BindCarrito();
             }
             catch (Exception ex)
@@ -121,7 +126,9 @@ namespace Hospital_Veterinario
                     if (!int.TryParse(txt.Text, out int nueva) || nueva <= 0)
                         throw new Exception("La cantidad debe ser mayor a 0.");
 
-                    gestorProd.ValidarCantidad(productoId, nueva);
+                    // VALIDACIÓN VÍA WS
+                    ValidarUnaCantidadConWS(productoId, nueva);
+
                     var item = Carrito.First(c => c.ProductoId == productoId);
                     item.Cantidad = nueva;
                 }
@@ -140,6 +147,61 @@ namespace Hospital_Veterinario
         {
             Carrito = new List<CarritoItem>();
             BindCarrito();
+        }
+
+        protected void btnPagar_Click(object sender, EventArgs e)
+        {
+            Response.Write("<script>alert('El pago fue realizado correctamente');</script>");
+        }
+
+        private void ValidarUnaCantidadConWS(int productoId, int cantidad)
+        {
+            // Traemos datos de DAL
+            var p = gestorProd.ObtenerPorId(productoId);
+
+            var ws = new Hospital_Veterinario.WebServiceValidator();
+            var entrada = new List<Hospital_Veterinario.WebServiceValidator.ItemEntrada>
+            {
+                new Hospital_Veterinario.WebServiceValidator.ItemEntrada
+                {
+                    ProductoId = productoId,
+                    CantidadSolicitada = cantidad,
+                    StockActual = p.StockActual,
+                    StockMinimo = p.StockMinimo
+                }
+            };
+
+            var resultado = ws.ValidarCarrito(entrada);
+
+            // Caso inválido: lanzamos excepción
+            if (!resultado.Valido)
+            {
+                // Tomamos el detalle del único ítem
+                var d = resultado.Detalle[0];
+                throw new Exception(
+                    $"No hay stock suficiente. Solicitado {d.Solicitada}, disponible {d.Disponible}.");
+            }
+
+            // Caso válido con warning: mostramos alerta (no bloquea la carga)
+            var det = resultado.Detalle[0];
+            if (det.Warning)
+            {
+                ClientScript.RegisterStartupScript(
+                    GetType(), "warn1",
+                    $"alert('{EscapeForJs($"Advertencia: la venta deja stock por debajo del mínimo. {det.Mensaje}")}');",
+                    true
+                );
+            }
+        }
+
+
+        private static string EscapeForJs(string s)
+        {
+            return (s ?? string.Empty)
+                .Replace("\\", "\\\\")
+                .Replace("'", "\\'")
+                .Replace("\r", "")
+                .Replace("\n", "\\n");
         }
     }
 }

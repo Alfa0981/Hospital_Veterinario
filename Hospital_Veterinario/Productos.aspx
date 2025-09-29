@@ -106,7 +106,7 @@
             <div style="text-align:right; margin-top:10px">
                 <asp:Button ID="btnLimpiarCarrito" runat="server" Text="Vaciar carrito"
                     CssClass="btn btn-outline" OnClick="btnLimpiarCarrito_Click" />
-                <asp:Button ID="btnPagar" runat="server" Text="Pagar" CssClass="btn" Enabled="false" />
+                <asp:Button ID="btnPagar" runat="server" Text="Pagar" CssClass="btn" Enabled="false" OnClick="btnPagar_Click" />
             </div>
         </div>
     </form>
