@@ -151,7 +151,31 @@ namespace Hospital_Veterinario
 
         protected void btnPagar_Click(object sender, EventArgs e)
         {
-            Response.Write("<script>alert('El pago fue realizado correctamente');</script>");
+            try
+            {
+                if (Carrito == null || !Carrito.Any())
+                {
+                    lblError.Text = "No hay productos en el carrito.";
+                    lblError.Visible = true;
+                    return;
+                }
+
+                string rutaCarpeta = Server.MapPath("~/App_Data/");
+                if (!System.IO.Directory.Exists(rutaCarpeta))
+                    System.IO.Directory.CreateDirectory(rutaCarpeta);
+
+                string nombreArchivo = $"carrito_{DateTime.Now:yyyyMMdd_HHmmss}.xml";
+                string rutaXml = System.IO.Path.Combine(rutaCarpeta, nombreArchivo);
+
+                BLL.Helpers.XmlHelper.GuardarLista(Carrito, rutaXml);
+
+                Response.Redirect($"ConfirmarCompra.aspx?xml={HttpUtility.UrlEncode(rutaXml)}", false);
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = $"Error al procesar el pago: {ex.Message}";
+                lblError.Visible = true;
+            }
         }
 
         private void ValidarUnaCantidadConWS(int productoId, int cantidad)
