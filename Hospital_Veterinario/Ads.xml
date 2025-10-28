@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Advertisements>
+	<Ad>
+		<ImageUrl>/Images/Ad_Vacunas.png</ImageUrl>
+		<AlternateText>Campaña de Vacunación Anual</AlternateText>
+		<Keyword>salud</Keyword>
+		<Impressions>150</Impressions>
+	</Ad>
+
+	<Ad>
+		<ImageUrl>/Images/Ad_Alimentos.png</ImageUrl>
+		<AlternateText>Alimentos Premium para tu Mascota</AlternateText>
+		<Keyword>productos</Keyword>
+		<Impressions>100</Impressions>
+	</Ad>
+
+	<Ad>
+		<ImageUrl>/Images/Ad_Peluqueria.png</ImageUrl>
+		<AlternateText>20% de descuento en Baño y Corte</AlternateText>
+		<Keyword>servicios</Keyword>
+		<Impressions>50</Impressions>
+	</Ad>
+</Advertisements>

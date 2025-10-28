@@ -103,7 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccesoDenegado.aspx" />
+    <Content Include="Ads.xml" />
     <Content Include="Bitacora.aspx" />
+    <Content Include="ConfirmarCompra.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -125,6 +127,9 @@
     <Content Include="DVForm.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Ad_Alimentos.png" />
+    <Content Include="Images\Ad_Peluqueria.png" />
+    <Content Include="Images\Ad_Vacunas.png" />
     <Content Include="Inicio.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="Restore.aspx" />
@@ -217,6 +222,13 @@
     </Compile>
     <Compile Include="Bitacora.aspx.designer.cs">
       <DependentUpon>Bitacora.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ConfirmarCompra.aspx.cs">
+      <DependentUpon>ConfirmarCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConfirmarCompra.aspx.designer.cs">
+      <DependentUpon>ConfirmarCompra.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

@@ -104,7 +104,18 @@
         <div class="center-container">
             <div class="welcome-box">
                 <asp:Label ID="lblBienvenida" runat="server" CssClass="welcome-label" Text="¡Bienvenido!"></asp:Label>
+            
+            <br />
+        
+            <div style="margin-top: 25px;">
+                <asp:AdRotator 
+                    ID="AdRotator1" 
+                    runat="server"
+                    AdvertisementFile="~/Ads.xml"
+                    Width="400px"  
+                    Height="250px" OnAdCreated="AdRotator1_AdCreated" />
             </div>
+                </div>
         </div>
     </form>
 </body>

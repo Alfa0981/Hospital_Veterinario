@@ -88,5 +88,10 @@ namespace Hospital_Veterinario
             gestorUsuario.logout();
             Response.Redirect("Default.aspx");
         }
+
+        protected void AdRotator1_AdCreated(object sender, AdCreatedEventArgs e)
+        {
+            //esta interacción cambia la imagen
+        }
     }
 }
